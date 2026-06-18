@@ -1,24 +1,35 @@
-import './Navigation.css'
-import Button from "../UI/Button";
+import React from 'react';
+import AuthContext from '../../store/auth-context';
+import classes from './Navigation.css';
 
 const Navigation = (props) => {
     return (
-        <nav className="nav">
-            <ul>
-                <li>
-                    <a href="/users">Users</a>
-                </li>
-                <li>
-                    <a href="/admin">Admin</a>
-                </li>
-                {props.loggedIn && (
-                    <li>
-                        <Button onClick={props.onLogout}>Logout</Button>
-                    </li>
-                )}
-            </ul>
-        </nav>
-    )
-}
+        <AuthContext.Consumer>
+            {(ctx) => {
+                return (
+                    <nav className={classes.nav}>
+                        <ul>
+                            {ctx.loggedIn && (
+                                <li>
+                                    <a href="/">Users</a>
+                                </li>
+                            )}
+                            {ctx.loggedIn && (
+                                <li>
+                                    <a href="/">Admin</a>
+                                </li>
+                            )}
+                            {ctx.loggedIn && (
+                                <li>
+                                    <button onClick={props.onLogout}>Logout</button>
+                                </li>
+                            )}
+                        </ul>
+                    </nav>
+                )
+            }}
+        </AuthContext.Consumer>
+    );
+};
 
-export default Navigation
+export default Navigation;
